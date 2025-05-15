@@ -1,16 +1,17 @@
-name: Deploy External React App
+name: Deploy External Next.js App
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # запуск вручную
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout deployment repo
+      - name: Checkout deployment repo (для push)
         uses: actions/checkout@v3
 
-      - name: Checkout source React repo
+      - name: Checkout source Next.js repo
         uses: actions/checkout@v3
         with:
           repository: VisionVello/VisionWeb
@@ -20,18 +21,22 @@ jobs:
       - name: Install dependencies
         run: |
           cd app
-          npm ci
+          npm install
 
-      - name: Build React App
+      - name: Build Next.js app
         run: |
           cd app
-          npm run build
+          npx next build
+
+      - name: Export static site
+        run: |
+          cd app
+          npx next export
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          publish_dir: ./app/build
           external_repository: VisionVello/deploy
           publish_branch: gh-pages
-
+          publish_dir: ./app/out
