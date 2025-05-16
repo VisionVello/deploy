@@ -28,11 +28,6 @@ jobs:
           cd app
           npx next build
 
-      - name: Export static site
-        run: |
-          cd app
-          npx next export
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
