@@ -33,6 +33,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          external_repository: VisionVello/deploy
+          external_repository: VisionVello/visionvello.github.io
           publish_branch: gh-pages
           publish_dir: ./app/out
